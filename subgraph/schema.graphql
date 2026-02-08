@@ -1,0 +1,6 @@
+type Container @entity {
+  id: ID!
+  owner: Bytes!
+  metadataUri: String!
+  createdAt: BigInt!
+}
