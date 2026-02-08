@@ -1,31 +1,35 @@
 'use client';
 
 import React, { useState } from 'react';
-import { 
-  LayoutDashboard, 
-  Zap, 
-  Globe, 
-  Users, 
-  TrendingUp, 
-  Menu, 
-  X,
+import {
+  ArrowRight,
+  Bot,
+  Boxes,
+  BrainCircuit,
+  CheckCircle2,
+  Cpu,
   Diamond,
+  Globe,
+  GraduationCap,
   Gavel,
   Landmark,
+  Layers3,
+  LineChart,
+  Lock,
   Pickaxe,
-  GraduationCap,
-  Wheat,
-  ArrowRight,
-  Loader2
+  ShieldCheck,
+  Sparkles,
+  Wallet,
+  Wheat
 } from 'lucide-react';
 import { CapitalDeploymentChart, SectorAllocationChart } from './components/DashboardCharts';
-import { SimulationView } from './components/SimulationView';
 import { generateDealSimulation } from './services/geminiService';
+import { aiAgents } from './data/aiAgents';
+import { contractTemplates, activeContracts, deploymentHighlights } from './data/contractManager';
+import { infrastructureFeatures, industryCoverage } from './data/infrastructureFeatures';
 import { Industry, SimulationResult } from './types';
 
 function App() {
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'engine'>('dashboard');
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [selectedIndustry, setSelectedIndustry] = useState<Industry>(Industry.FINANCE);
   const [dealDescription, setDealDescription] = useState('');
   const [isSimulating, setIsSimulating] = useState(false);
@@ -91,185 +95,343 @@ function App() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-950 text-slate-200 flex flex-col md:flex-row font-sans selection:bg-indigo-500/30">
-      
-      {/* Sidebar Navigation */}
-      <aside className={`fixed md:sticky top-0 left-0 z-40 h-screen w-72 bg-slate-900 border-r border-slate-800 transition-transform duration-300 ease-in-out ${mobileMenuOpen ? 'translate-x-0' : '-translate-x-full md:translate-x-0'}`}>
-        <div className="p-6 border-b border-slate-800 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-             <div className="w-10 h-10 bg-indigo-600 rounded-lg flex items-center justify-center shadow-lg shadow-indigo-500/30">
-                <Globe className="text-white w-6 h-6" />
-             </div>
-             <div>
-               <h1 className="font-bold text-xl text-white tracking-tight">AETHERIUS</h1>
-               <p className="text-[10px] text-slate-400 tracking-widest uppercase">Series A: $35B</p>
-             </div>
-          </div>
-          <button onClick={() => setMobileMenuOpen(false)} className="md:hidden text-slate-400">
-            <X className="w-6 h-6" />
-          </button>
-        </div>
-
-        <nav className="p-4 space-y-2 mt-4">
-          <button 
-            onClick={() => { setActiveTab('dashboard'); setMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${activeTab === 'dashboard' ? 'bg-indigo-600/10 text-indigo-400 border border-indigo-600/20' : 'text-slate-400 hover:bg-slate-800'}`}
-          >
-            <LayoutDashboard className="w-5 h-5" />
-            Executive Dashboard
-          </button>
-          
-          <button 
-             onClick={() => { setActiveTab('engine'); setMobileMenuOpen(false); }}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all ${activeTab === 'engine' ? 'bg-cyan-600/10 text-cyan-400 border border-cyan-600/20' : 'text-slate-400 hover:bg-slate-800'}`}
-          >
-            <Zap className="w-5 h-5" />
-            Anticipatory Engine
-          </button>
-
-          <div className="pt-8 pb-2 px-4 text-xs font-bold text-slate-500 uppercase tracking-wider">
-            Enterprise Solutions
-          </div>
-          {['Active Contracts', 'Venture Screening', 'Risk Management', 'Board Composition'].map((item) => (
-             <button key={item} className="w-full flex items-center gap-3 px-4 py-2 rounded-lg text-sm text-slate-400 hover:text-slate-200 hover:bg-slate-800/50 transition-colors">
-               <TrendingUp className="w-4 h-4 opacity-50" />
-               {item}
-             </button>
-          ))}
-        </nav>
-
-        <div className="absolute bottom-0 w-full p-6 border-t border-slate-800">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-slate-800 border border-slate-700 overflow-hidden">
-               <img src="https://picsum.photos/100/100" alt="Founder" className="w-full h-full object-cover opacity-80" />
+    <div className="min-h-screen bg-[#05060b] text-slate-100 font-sans">
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(69,84,255,0.18),_transparent_55%)]" />
+        <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#0b0f22] to-transparent" />
+        <div className="relative">
+          <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-400 shadow-lg shadow-indigo-500/30">
+                <Globe className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-white">OBXAlethia</p>
+                <p className="text-[10px] uppercase tracking-[0.4em] text-slate-400">Agentic ERP</p>
+              </div>
             </div>
+            <nav className="hidden items-center gap-6 text-xs uppercase tracking-[0.2em] text-slate-400 md:flex">
+              <span>Solutions</span>
+              <span>Web3</span>
+              <span>Agents</span>
+              <span>Resources</span>
+            </nav>
+            <button className="rounded-full border border-slate-700 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-200">
+              Request Access
+            </button>
+          </header>
+
+          <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-20 pt-6 md:grid-cols-[1.1fr_0.9fr]">
             <div>
-              <p className="text-sm font-bold text-white">Founder & CEO</p>
-              <p className="text-xs text-slate-500">Global Admin</p>
+              <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-indigo-500/40 bg-indigo-500/10 px-4 py-2 text-xs uppercase tracking-[0.2em] text-indigo-200">
+                <Sparkles className="h-4 w-4" />
+                Secure AI + Web3 ERP
+              </p>
+              <h1 className="text-4xl font-semibold text-white md:text-5xl">
+                A digital contract chamber for institutional capital, agentic workflows, and decentralized borrowing.
+              </h1>
+              <p className="mt-6 text-base text-slate-400">
+                Orchestrate multi-institution programs with on-chain governance, AI decisioning, and automated
+                compliance. Align stakeholders, issue programmable contracts, and unlock capital across verticals.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <button className="flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30">
+                  Launch ERP <ArrowRight className="h-4 w-4" />
+                </button>
+                <button className="rounded-full border border-slate-700 px-6 py-3 text-sm font-semibold text-slate-200">
+                  View smart contracts
+                </button>
+              </div>
+              <div className="mt-10 flex flex-wrap gap-6 text-xs uppercase tracking-[0.2em] text-slate-500">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-indigo-400" /> SOC2-ready controls
+                </div>
+                <div className="flex items-center gap-2">
+                  <Wallet className="h-4 w-4 text-cyan-400" /> Treasury-grade custody
+                </div>
+                <div className="flex items-center gap-2">
+                  <BrainCircuit className="h-4 w-4 text-fuchsia-400" /> Agentic orchestration
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 overflow-y-auto bg-slate-950 p-4 md:p-8">
-        
-        {/* Mobile Header */}
-        <div className="md:hidden flex items-center justify-between mb-6">
-          <div className="flex items-center gap-2">
-            <Globe className="text-indigo-500 w-6 h-6" />
-            <span className="font-bold text-white">AETHERIUS</span>
-          </div>
-          <button onClick={() => setMobileMenuOpen(true)} className="text-slate-200">
-            <Menu className="w-6 h-6" />
-          </button>
-        </div>
-
-        {activeTab === 'dashboard' ? (
-          <div className="space-y-8 animate-fade-in">
-             <header className="mb-8">
-               <h2 className="text-3xl font-bold text-white tracking-tight">Executive Overview</h2>
-               <p className="text-slate-400 mt-2 max-w-2xl">
-                 Real-time monitoring of decentralized capital deployment, smart contract velocity, and industry penetration across global markets.
-               </p>
-             </header>
-
-             {/* KPIs */}
-             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <div className="rounded-3xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur">
+              <div className="flex items-center justify-between">
+                <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Live AI Core</p>
+                <span
+                  className={`rounded-full border px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.2em] ${
+                    hasApiKey
+                      ? 'border-cyan-500/40 bg-cyan-500/10 text-cyan-200'
+                      : 'border-amber-500/40 bg-amber-500/10 text-amber-200'
+                  }`}
+                >
+                  {hasApiKey ? 'Connected' : 'Local Mode'}
+                </span>
+              </div>
+              <div className="mt-6 space-y-4">
                 {[
-                  { label: 'AUM (Series A)', value: '$35.0B', change: '+0%', neutral: true },
-                  { label: 'Active Contracts', value: '1,204', change: '+12.5%', positive: true },
-                  { label: 'Deploy Speed', value: '45ms', change: '-18%', positive: true }, // Lower is better
-                  { label: 'Risk Adjusted Returns', value: '24.8%', change: '+2.4%', positive: true },
-                ].map((stat, idx) => (
-                  <div key={idx} className="bg-slate-900 border border-slate-800 p-6 rounded-xl hover:border-indigo-500/30 transition-colors">
-                    <p className="text-slate-500 text-xs font-bold uppercase tracking-wider mb-1">{stat.label}</p>
-                    <div className="flex items-end justify-between">
-                      <span className="text-2xl font-bold text-white font-mono">{stat.value}</span>
-                      <span className={`text-xs font-bold px-2 py-1 rounded ${stat.neutral ? 'bg-slate-800 text-slate-400' : stat.positive ? 'bg-green-500/10 text-green-400' : 'bg-red-500/10 text-red-400'}`}>
-                        {stat.change}
-                      </span>
-                    </div>
+                  { label: 'Protocol status', value: 'Stable · 24/7 uptime' },
+                  { label: 'Active institutions', value: '148 entities' },
+                  { label: 'Capital in motion', value: '$12.4B' }
+                ].map((item) => (
+                  <div key={item.label} className="rounded-2xl border border-slate-800 bg-slate-950/60 p-4">
+                    <p className="text-xs uppercase tracking-[0.3em] text-slate-500">{item.label}</p>
+                    <p className="mt-2 text-lg font-semibold text-white">{item.value}</p>
                   </div>
                 ))}
-             </div>
-
-             {/* Charts Area */}
-             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl">
-                  <h3 className="text-lg font-bold text-white mb-6">Capital Deployment Velocity</h3>
-                  <CapitalDeploymentChart />
-                </div>
-                <div className="bg-slate-900 border border-slate-800 p-6 rounded-xl">
-                  <h3 className="text-lg font-bold text-white mb-6">Sector Allocation (Billions)</h3>
-                  <SectorAllocationChart />
-                </div>
-             </div>
-
-             {/* Recent Activity */}
-             <div className="bg-slate-900 border border-slate-800 rounded-xl overflow-hidden">
-               <div className="p-6 border-b border-slate-800 flex justify-between items-center">
-                 <h3 className="text-lg font-bold text-white">Live Contract Feed</h3>
-                 <button className="text-xs text-indigo-400 hover:text-indigo-300 font-medium">View All Transactions</button>
-               </div>
-               <div className="divide-y divide-slate-800">
-                 {[
-                   { id: '0x8f...2a', type: 'LBO Execution', industry: 'Mining', value: '$450M', status: 'Verifying' },
-                   { id: '0xa1...9b', type: 'Auction Escrow', industry: 'Art World', value: '$22M', status: 'Complete' },
-                   { id: '0x4c...11', type: 'DeFi Liquidity', industry: 'Finance', value: '$1.2B', status: 'Processing' },
-                   { id: '0xb2...ff', type: 'Land Deed Token', industry: 'Agriculture', value: '$85M', status: 'Complete' },
-                 ].map((tx, idx) => (
-                   <div key={idx} className="p-4 flex items-center justify-between hover:bg-slate-800/50 transition-colors">
-                     <div className="flex items-center gap-4">
-                       <div className={`w-2 h-2 rounded-full ${tx.status === 'Complete' ? 'bg-green-400' : 'bg-amber-400 animate-pulse'}`}></div>
-                       <div>
-                         <p className="text-sm font-medium text-white">{tx.type}</p>
-                         <p className="text-xs text-slate-500 font-mono">{tx.id} • {tx.industry}</p>
-                       </div>
-                     </div>
-                     <div className="text-right">
-                       <p className="text-sm font-bold text-white">{tx.value}</p>
-                       <p className="text-xs text-slate-500">{tx.status}</p>
-                     </div>
-                   </div>
-                 ))}
-               </div>
-             </div>
-          </div>
-        ) : (
-          <div className="space-y-6 animate-fade-in max-w-6xl mx-auto">
-            <header className="flex justify-between items-end mb-8 border-b border-slate-800 pb-6">
-              <div>
-                <h2 className="text-3xl font-bold text-cyan-400 tracking-tight flex items-center gap-3">
-                  <Zap className="w-8 h-8" />
-                  Anticipatory Engine
-                </h2>
-                <p className="text-slate-400 mt-2">
-                  Input complex deal parameters. The engine anticipates capital needs, regulatory friction, and structural requirements using blockchain logic.
+              </div>
+              <div className="mt-6 rounded-2xl border border-slate-800 bg-gradient-to-br from-indigo-500/20 via-transparent to-cyan-500/20 p-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Agent OS</p>
+                <p className="mt-2 text-sm text-slate-200">
+                  Coordinate AI agents, n8n workflows, and smart contract hooks from a unified command layer.
                 </p>
               </div>
-            </header>
+            </div>
+          </section>
+        </div>
+      </div>
 
-            {/* Input Section */}
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              <div className="lg:col-span-1 space-y-6">
-                <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl">
-                  <label className="block text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">
-                    Select Industry Vertical
-                  </label>
-                  <div className="grid grid-cols-2 gap-3">
-                    {industries.map((ind) => (
-                      <button
-                        key={ind.id}
-                        onClick={() => setSelectedIndustry(ind.id)}
-                        className={`flex flex-col items-center justify-center p-3 rounded-lg border transition-all ${selectedIndustry === ind.id ? 'bg-indigo-600 border-indigo-500 text-white shadow-lg shadow-indigo-900/50' : 'bg-slate-950 border-slate-800 text-slate-400 hover:border-slate-600'}`}
-                      >
-                        <div className="mb-2">{ind.icon}</div>
-                        <span className="text-xs font-medium text-center">{ind.label}</span>
-                      </button>
+      <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-16 md:grid-cols-3">
+        {[
+          {
+            title: 'Digital Contract Chamber',
+            description: 'Register institutions, projects, and smart-contract governance on-chain.',
+            icon: <Layers3 className="h-5 w-5 text-indigo-300" />
+          },
+          {
+            title: 'Decentralized Borrowing',
+            description: 'Launch programmable pools for cross-border infrastructure financing.',
+            icon: <Wallet className="h-5 w-5 text-cyan-300" />
+          },
+          {
+            title: 'Agentic ERP Layer',
+            description: 'Autonomous workflows for compliance, treasury, and vendor orchestration.',
+            icon: <Bot className="h-5 w-5 text-fuchsia-300" />
+          }
+        ].map((card) => (
+          <div
+            key={card.title}
+            className="rounded-2xl border border-slate-800 bg-slate-950/70 p-6 shadow-[0_0_40px_rgba(15,23,42,0.45)]"
+          >
+            <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900">
+              {card.icon}
+            </div>
+            <h3 className="text-lg font-semibold text-white">{card.title}</h3>
+            <p className="mt-3 text-sm text-slate-400">{card.description}</p>
+          </div>
+        ))}
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-16">
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Capital Intelligence</p>
+                <h3 className="mt-2 text-2xl font-semibold text-white">Multi-vertical deployment map</h3>
+              </div>
+              <LineChart className="h-6 w-6 text-indigo-300" />
+            </div>
+            <div className="mt-6 grid gap-6 lg:grid-cols-2">
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+                <h4 className="text-sm font-semibold text-white">Capital Velocity</h4>
+                <CapitalDeploymentChart />
+              </div>
+              <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+                <h4 className="text-sm font-semibold text-white">Sector Allocation</h4>
+                <SectorAllocationChart />
+              </div>
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Agentic Missions</p>
+              <h3 className="mt-2 text-2xl font-semibold text-white">AI + n8n orchestration hub</h3>
+              <div className="mt-6 space-y-4">
+                {[
+                  'Deploy AI underwriting agents with compliance guardrails.',
+                  'Trigger smart-contract releases via n8n workflows.',
+                  'Connect treasury, risk, and procurement in real time.'
+                ].map((item) => (
+                  <div key={item} className="flex items-start gap-3 text-sm text-slate-300">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 text-cyan-400" />
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Secure Infrastructure</p>
+              <div className="mt-4 grid gap-4">
+                {[
+                  { label: 'Custody & Escrow', icon: <Lock className="h-4 w-4 text-indigo-300" /> },
+                  { label: 'Tokenized Workflows', icon: <Boxes className="h-4 w-4 text-cyan-300" /> },
+                  { label: 'Zero-Trust Routing', icon: <Cpu className="h-4 w-4 text-fuchsia-300" /> }
+                ].map((item) => (
+                  <div key={item.label} className="flex items-center gap-3 rounded-2xl border border-slate-800 bg-slate-900/60 p-3 text-sm text-slate-200">
+                    <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-950">{item.icon}</span>
+                    {item.label}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-20 lg:grid-cols-[1.1fr_0.9fr]">
+        <div className="rounded-3xl border border-slate-800 bg-gradient-to-br from-[#131624] via-[#0b0d1a] to-[#0f1329] p-6">
+          <div className="flex items-center gap-3 text-xs uppercase tracking-[0.3em] text-slate-400">
+            <Sparkles className="h-4 w-4 text-indigo-300" /> Deal simulation workspace
+          </div>
+          <h3 className="mt-4 text-2xl font-semibold text-white">Anticipatory engine</h3>
+          <p className="mt-2 text-sm text-slate-400">
+            Feed complex transactions to the AI core and generate compliant smart contract plans in seconds.
+          </p>
+          <div className="mt-6 grid gap-4 lg:grid-cols-2">
+            {industries.map((ind) => (
+              <button
+                key={ind.id}
+                onClick={() => setSelectedIndustry(ind.id)}
+                className={`flex items-center gap-3 rounded-2xl border px-4 py-3 text-left text-sm transition ${
+                  selectedIndustry === ind.id
+                    ? 'border-indigo-500/60 bg-indigo-500/10 text-white'
+                    : 'border-slate-800 bg-slate-950/60 text-slate-300 hover:border-slate-600'
+                }`}
+              >
+                <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-900">
+                  {ind.icon}
+                </span>
+                {ind.label}
+              </button>
+            ))}
+          </div>
+          <textarea
+            value={dealDescription}
+            onChange={(e) => setDealDescription(e.target.value)}
+            placeholder="Describe the infrastructure deal, capital structure, and compliance requirements..."
+            className="mt-6 h-32 w-full rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-sm text-slate-100 placeholder:text-slate-600 focus:border-indigo-500 focus:outline-none"
+          />
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+            <p className="text-xs text-slate-500">*OpenAI is used as the primary engine. Gemini can be added as fallback.</p>
+            <button
+              onClick={handleSimulation}
+              disabled={isSimulating || !dealDescription}
+              className={`flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition ${
+                isSimulating || !dealDescription
+                  ? 'bg-slate-800 text-slate-500'
+                  : 'bg-gradient-to-r from-indigo-500 to-cyan-500 text-white shadow-lg shadow-indigo-500/30'
+              }`}
+            >
+              {isSimulating ? 'Processing' : 'Run simulation'}
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+          {simulationError && (
+            <div className="mt-4 rounded-2xl border border-red-500/40 bg-red-500/10 p-3 text-xs text-red-200">
+              {simulationError}
+            </div>
+          )}
+          {simulationResult && (
+            <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-sm text-slate-200">
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Simulation Output</p>
+              <p className="mt-3 text-lg font-semibold text-white">{simulationResult.contractId}</p>
+              <p className="mt-2 text-sm text-slate-400">{simulationResult.strategicInsight}</p>
+            </div>
+          )}
+        </div>
+
+        <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+          <p className="text-xs uppercase tracking-[0.3em] text-slate-500">ERP Modules</p>
+          <h3 className="mt-2 text-2xl font-semibold text-white">Unified operational cockpit</h3>
+          <div className="mt-6 grid gap-4">
+            {[
+              { title: 'Treasury & Tokenization', subtitle: 'Cap tables, vesting, custody, and escrow.' },
+              { title: 'Compliance & Risk', subtitle: 'KYC/AML, jurisdiction rules, audit trails.' },
+              { title: 'Procurement & Supply', subtitle: 'Vendor management and smart contract routing.' },
+              { title: 'Agent Studio', subtitle: 'Create AI agents and connect n8n workflows.' }
+            ].map((item) => (
+              <div key={item.title} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                <p className="text-sm font-semibold text-white">{item.title}</p>
+                <p className="mt-2 text-xs text-slate-400">{item.subtitle}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-6 rounded-2xl border border-slate-800 bg-gradient-to-r from-indigo-500/10 to-cyan-500/10 p-4">
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Access</p>
+            <p className="mt-2 text-sm text-slate-200">
+              Launch private workspaces, invite institutions, and map permissions to on-chain roles.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-20">
+        <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-8">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Enterprise infrastructure</p>
+              <h3 className="mt-2 text-2xl font-semibold text-white">Institutional-grade capabilities</h3>
+            </div>
+            <span className="rounded-full border border-slate-700 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-slate-400">
+              Next.js core
+            </span>
+          </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {infrastructureFeatures.map((feature) => (
+              <div key={feature.title} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+                <p className="text-sm font-semibold text-white">{feature.title}</p>
+                <p className="mt-3 text-sm text-slate-400">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 flex flex-wrap items-center gap-3 text-xs text-slate-300">
+            {industryCoverage.map((industry) => (
+              <span
+                key={industry}
+                className="rounded-full border border-slate-800 bg-slate-900/60 px-4 py-2 text-[11px] uppercase tracking-[0.25em] text-slate-400"
+              >
+                {industry}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-20">
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+            <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Smart contract manager</p>
+            <h3 className="mt-2 text-2xl font-semibold text-white">Deployment-ready templates</h3>
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              {contractTemplates.map((template) => (
+                <div key={template.name} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold text-white">{template.name}</p>
+                      <p className="mt-1 text-xs uppercase tracking-[0.2em] text-slate-500">{template.category}</p>
+                    </div>
+                    <span className="rounded-full border border-slate-700 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-400">
+                      {template.complexity}
+                    </span>
+                  </div>
+                  <div className="mt-4 flex flex-wrap gap-2 text-xs text-slate-300">
+                    <span className="rounded-full border border-slate-800 px-2 py-1">Cost: {template.deployCost}</span>
+                    <span className="rounded-full border border-slate-800 px-2 py-1">Avg: {template.avgTime}</span>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-slate-400">
+                    {template.compliance.map((req) => (
+                      <span key={req} className="rounded-full border border-slate-800 px-2 py-1">
+                        {req}
+                      </span>
                     ))}
                   </div>
                 </div>
+              ))}
+            </div>
+          </div>
 
                 <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl">
                   <h4 className="text-sm font-bold text-white mb-2">Founder's Note</h4>
@@ -292,7 +454,17 @@ function App() {
                   </p>
                 </div>
               </div>
+            </div>
 
+            <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Active contracts</p>
+              <div className="mt-4 space-y-4">
+                {activeContracts.map((contract) => (
+                  <div key={contract.name} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                    <div className="flex items-center justify-between">
+                      <p className="text-sm font-semibold text-white">{contract.name}</p>
+                      <span className="rounded-full border border-slate-700 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-400">
+                        {contract.status}
               <div className="lg:col-span-2 flex flex-col gap-6">
                 <div className="bg-slate-900 border border-slate-800 p-1 rounded-xl relative group">
                   <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-xl opacity-20 blur group-hover:opacity-30 transition-opacity"></div>
@@ -310,21 +482,18 @@ function App() {
                       <span className="text-xs text-slate-500">
                         *Engine runs on OpenAI for high-speed reasoning.
                       </span>
-                      <button
-                        onClick={handleSimulation}
-                        disabled={isSimulating || !dealDescription}
-                        className={`flex items-center gap-2 px-6 py-3 rounded-lg font-bold text-sm shadow-lg transition-all ${isSimulating || !dealDescription ? 'bg-slate-800 text-slate-500 cursor-not-allowed' : 'bg-gradient-to-r from-indigo-600 to-cyan-600 text-white hover:shadow-indigo-500/25 hover:scale-105 active:scale-95'}`}
-                      >
-                        {isSimulating ? (
-                          <>
-                            <Loader2 className="w-4 h-4 animate-spin" /> Processing Protocols...
-                          </>
-                        ) : (
-                          <>
-                            Initiate Anticipatory Protocol <ArrowRight className="w-4 h-4" />
-                          </>
-                        )}
-                      </button>
+                    </div>
+                    <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-500">{contract.type}</p>
+                    <p className="mt-2 text-xs text-slate-400">Parties: {contract.parties.join(', ')}</p>
+                    <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-800">
+                      <div
+                        className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500"
+                        style={{ width: `${contract.progress}%` }}
+                      />
+                    </div>
+                    <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
+                      <span>Deployed {contract.deployedAt}</span>
+                      <span>{contract.txHash.slice(0, 10)}…</span>
                     </div>
 
                     <div className="mt-6 border-t border-slate-800 pt-4">
@@ -345,6 +514,7 @@ function App() {
                       </div>
                     </div>
                   </div>
+                ))}
                 </div>
 
                 {simulationError && (
@@ -357,8 +527,34 @@ function App() {
               </div>
             </div>
           </div>
-        )}
-      </main>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-8">
+          <p className="text-xs uppercase tracking-[0.3em] text-slate-500">AI agents</p>
+          <h3 className="mt-2 text-2xl font-semibold text-white">Operational agent mesh</h3>
+          <p className="mt-3 text-sm text-slate-400">
+            Implemented workflows combine n8n automation, specialized agent roles, and enterprise integrations.
+          </p>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {aiAgents.map((agent) => (
+              <div key={agent.name} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+                <p className="text-sm font-semibold text-white">{agent.name}</p>
+                <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-500">{agent.focus}</p>
+                <p className="mt-3 text-sm text-slate-400">{agent.description}</p>
+                <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-400">
+                  {agent.integrations.map((tool) => (
+                    <span key={tool} className="rounded-full border border-slate-800 px-2 py-1">
+                      {tool}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

@@ -16,7 +16,7 @@ const sectorData = [
   { name: 'Art', value: 200 },
 ];
 
-const COLORS = ['#6366f1', '#8b5cf6', '#ec4899', '#06b6d4'];
+const COLORS = ['#6366f1', '#22d3ee', '#f472b6', '#a855f7'];
 
 export const CapitalDeploymentChart: React.FC = () => {
   return (
@@ -29,13 +29,13 @@ export const CapitalDeploymentChart: React.FC = () => {
               <stop offset="95%" stopColor="#6366f1" stopOpacity={0}/>
             </linearGradient>
           </defs>
-          <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+          <CartesianGrid strokeDasharray="4 6" stroke="#1f2937" />
           <XAxis dataKey="name" stroke="#94a3b8" />
           <YAxis stroke="#94a3b8" />
-          <Tooltip 
-            contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc' }}
+          <Tooltip
+            contentStyle={{ backgroundColor: '#0b1120', borderColor: '#1f2937', color: '#f8fafc' }}
           />
-          <Area type="monotone" dataKey="capital" stroke="#6366f1" fillOpacity={1} fill="url(#colorCapital)" />
+          <Area type="monotone" dataKey="capital" stroke="#818cf8" fillOpacity={1} fill="url(#colorCapital)" />
         </AreaChart>
       </ResponsiveContainer>
     </div>
@@ -47,12 +47,12 @@ export const SectorAllocationChart: React.FC = () => {
     <div className="h-64 w-full">
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={sectorData}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#1e293b" />
+          <CartesianGrid strokeDasharray="4 6" stroke="#1f2937" />
           <XAxis dataKey="name" stroke="#94a3b8" />
           <YAxis stroke="#94a3b8" />
-          <Tooltip 
-             contentStyle={{ backgroundColor: '#0f172a', borderColor: '#334155', color: '#f8fafc' }}
-             cursor={{fill: '#1e293b'}}
+          <Tooltip
+             contentStyle={{ backgroundColor: '#0b1120', borderColor: '#1f2937', color: '#f8fafc' }}
+             cursor={{fill: '#111827'}}
           />
           <Bar dataKey="value" fill="#8884d8">
             {sectorData.map((entry, index) => (
