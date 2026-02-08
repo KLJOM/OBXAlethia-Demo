@@ -47,6 +47,27 @@ function App() {
     { id: Industry.AGRICULTURE, icon: <Wheat className="w-4 h-4" />, label: 'Agriculture' },
   ];
 
+  const quickPrompts = [
+    {
+      industry: Industry.MINING,
+      label: 'Lithium LBO',
+      prompt:
+        'Initiating an LBO for a mid-cap lithium mine in Western Australia. Need a $400M raise utilizing 30% DeFi bonds and 70% institutional equity. Ensure cross-border asset transfer compliance.'
+    },
+    {
+      industry: Industry.REAL_ESTATE,
+      label: 'Tokenized Tower',
+      prompt:
+        'Tokenize a $180M commercial tower in Dubai with REIT-backed debt, aiming for a 24-month stabilization and ESG reporting for global LPs.'
+    },
+    {
+      industry: Industry.ART,
+      label: 'Auction Escrow',
+      prompt:
+        'Structure a $60M escrow for a rotating collection of contemporary art with provenance verification, auction settlement, and AML safeguards.'
+    }
+  ];
+
   const handleSimulation = async () => {
     if (!dealDescription.trim()) return;
     setIsSimulating(true);
@@ -412,18 +433,26 @@ function App() {
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Deployment telemetry</p>
-              <h3 className="mt-2 text-2xl font-semibold text-white">Execution workspace</h3>
-              <div className="mt-6 space-y-4">
-                {deploymentHighlights.map((item) => (
-                  <div key={item.label} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
-                    <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">{item.label}</p>
-                    <p className="mt-2 text-sm font-semibold text-white">{item.value}</p>
-                    <p className="mt-2 text-xs text-slate-400">{item.description}</p>
+                <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl">
+                  <h4 className="text-sm font-bold text-white mb-2">Founder's Note</h4>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    "This engine leverages my pattern recognition algorithms honed through years of PE and DeFi experience. It doesn't just process; it anticipates scarcity and regulatory bottlenecks before they occur."
+                  </p>
+                </div>
+
+                <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-bold text-white">Engine Status</h4>
+                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${hasApiKey ? 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/30' : 'bg-amber-500/10 text-amber-300 border border-amber-500/30'}`}>
+                      {hasApiKey ? 'Live AI Enabled' : 'Local Mode'}
+                    </span>
                   </div>
-                ))}
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    {hasApiKey
+                      ? 'OpenAI is connected for live reasoning and structured outputs.'
+                      : 'Add NEXT_PUBLIC_OPENAI_API_KEY to .env.local to enable live AI generation.'}
+                  </p>
+                </div>
               </div>
             </div>
 
@@ -436,6 +465,22 @@ function App() {
                       <p className="text-sm font-semibold text-white">{contract.name}</p>
                       <span className="rounded-full border border-slate-700 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-400">
                         {contract.status}
+              <div className="lg:col-span-2 flex flex-col gap-6">
+                <div className="bg-slate-900 border border-slate-800 p-1 rounded-xl relative group">
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-500 to-cyan-500 rounded-xl opacity-20 blur group-hover:opacity-30 transition-opacity"></div>
+                  <div className="relative bg-slate-950 rounded-lg p-6">
+                    <label className="block text-sm font-medium text-slate-300 mb-2">
+                      Describe Deal Parameters & Objectives
+                    </label>
+                    <textarea
+                      value={dealDescription}
+                      onChange={(e) => setDealDescription(e.target.value)}
+                      placeholder="e.g., Initiating an LBO for a mid-cap lithium mine in Western Australia. Need structure for a $400M raise utilizing 30% DeFi bonds and 70% institutional equity. Compliance needed for cross-border asset transfer..."
+                      className="w-full h-40 bg-slate-900 border border-slate-800 rounded-lg p-4 text-slate-200 placeholder-slate-600 focus:outline-none focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all resize-none font-mono text-sm"
+                    />
+                    <div className="mt-4 flex justify-between items-center">
+                      <span className="text-xs text-slate-500">
+                        *Engine runs on OpenAI for high-speed reasoning.
                       </span>
                     </div>
                     <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-500">{contract.type}</p>
@@ -450,8 +495,35 @@ function App() {
                       <span>Deployed {contract.deployedAt}</span>
                       <span>{contract.txHash.slice(0, 10)}…</span>
                     </div>
+
+                    <div className="mt-6 border-t border-slate-800 pt-4">
+                      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Quick Launch Prompts</p>
+                      <div className="flex flex-wrap gap-2">
+                        {quickPrompts.map((item) => (
+                          <button
+                            key={item.label}
+                            onClick={() => {
+                              setSelectedIndustry(item.industry);
+                              setDealDescription(item.prompt);
+                            }}
+                            className="text-xs px-3 py-2 rounded-full border border-slate-800 bg-slate-900/60 text-slate-300 hover:border-indigo-500/50 hover:text-white transition"
+                          >
+                            {item.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 ))}
+                </div>
+
+                {simulationError && (
+                  <div className="bg-red-500/10 border border-red-500/30 text-red-200 text-sm rounded-lg p-4">
+                    {simulationError}
+                  </div>
+                )}
+
+                {simulationResult && <SimulationView result={simulationResult} />}
               </div>
             </div>
           </div>
