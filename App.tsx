@@ -26,6 +26,7 @@ import { CapitalDeploymentChart, SectorAllocationChart } from './components/Dash
 import { generateDealSimulation } from './services/geminiService';
 import { aiAgents } from './data/aiAgents';
 import { contractTemplates, activeContracts, deploymentHighlights } from './data/contractManager';
+import { enterpriseIntegrations, enterpriseModules } from './data/enterpriseModules';
 import { infrastructureFeatures, industryCoverage } from './data/infrastructureFeatures';
 import { Industry, SimulationResult } from './types';
 
@@ -433,6 +434,18 @@ function App() {
             </div>
           </div>
 
+          <div className="space-y-6">
+            <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Deployment telemetry</p>
+              <h3 className="mt-2 text-2xl font-semibold text-white">Execution workspace</h3>
+              <div className="mt-6 space-y-4">
+                {deploymentHighlights.map((item) => (
+                  <div key={item.label} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                    <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">{item.label}</p>
+                    <p className="mt-2 text-sm font-semibold text-white">{item.value}</p>
+                    <p className="mt-2 text-xs text-slate-400">{item.description}</p>
+                  </div>
+                ))}
                 <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl">
                   <h4 className="text-sm font-bold text-white mb-2">Founder's Note</h4>
                   <p className="text-xs text-slate-400 leading-relaxed">
@@ -493,6 +506,21 @@ function App() {
                     </div>
                     <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
                       <span>Deployed {contract.deployedAt}</span>
+                      {contract.blockchainUrl ? (
+                        <a
+                          href={contract.blockchainUrl}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="text-cyan-300 hover:text-cyan-200"
+                        >
+                          {contract.txHash.slice(0, 10)}…
+                        </a>
+                      ) : (
+                        <span>{contract.txHash.slice(0, 10)}…</span>
+                      )}
+                    </div>
+                  </div>
+                ))}
                       <span>{contract.txHash.slice(0, 10)}…</span>
                     </div>
 
@@ -551,6 +579,59 @@ function App() {
                   ))}
                 </div>
               </div>
+            ))}
+          </div>
+          <div className="mt-8 rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-xs text-slate-400">
+            Each agent profile includes automation hooks and enterprise integrations aligned to the OBXAlethia
+            operating model.
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-8">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Enterprise modules</p>
+              <h3 className="mt-2 text-2xl font-semibold text-white">ERP intelligence workspace</h3>
+            </div>
+            <span className="rounded-full border border-slate-700 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-slate-400">
+              Integrated
+            </span>
+          </div>
+          <p className="mt-3 text-sm text-slate-400">
+            Reintroduced advisory, compliance, analytics, and negotiation tooling as modular surfaces aligned to the
+            Next.js experience.
+          </p>
+          <div className="mt-4 rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-xs text-slate-400">
+            OBXAlethia unifies TypeScript/React, CSS, PostCSS, HTML, and Solidity workflows to deliver AI-driven,
+            web3-native infrastructure operations with consistent data flow and deployment tooling.
+          </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {enterpriseModules.map((module) => (
+              <div key={module.title} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+                <div className="flex items-center justify-between">
+                  <p className="text-sm font-semibold text-white">{module.title}</p>
+                  <span className="rounded-full border border-slate-700 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-400">
+                    {module.category}
+                  </span>
+                </div>
+                <p className="mt-3 text-sm text-slate-400">{module.description}</p>
+                <div className="mt-4 flex flex-wrap gap-2 text-[11px] text-slate-400">
+                  {module.primaryActions.map((action) => (
+                    <span key={action} className="rounded-full border border-slate-800 px-2 py-1">
+                      {action}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 flex flex-wrap gap-2 text-[11px] text-slate-400">
+            {enterpriseIntegrations.map((integration) => (
+              <span key={integration} className="rounded-full border border-slate-800 px-3 py-1">
+                {integration}
+              </span>
             ))}
           </div>
         </div>
