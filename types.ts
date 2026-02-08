@@ -22,6 +22,8 @@ export interface SimulationResult {
   }[];
   complianceChecklist: string[];
   strategicInsight: string;
+  mode?: 'live' | 'local';
+  warnings?: string[];
 }
 
 export interface DashboardMetric {
