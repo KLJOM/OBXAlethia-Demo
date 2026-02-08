@@ -15,6 +15,15 @@ View your app in AI Studio: https://ai.studio/apps/drive/1JW4r5-9AWRnEr7PdWOcXRv
 
 1. Install dependencies:
    `npm install`
-2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
+2. Set the `NEXT_PUBLIC_OPENAI_API_KEY` in [.env.local](.env.local) to your OpenAI API key
 3. Run the app:
    `npm run dev`
+
+## Smart Contracts (Hardhat)
+
+1. Install dependencies:
+   `npm install`
+2. Compile contracts:
+   `npx hardhat compile`
+3. Run tests (if added):
+   `npm test`

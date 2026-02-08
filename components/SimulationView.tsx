@@ -23,6 +23,17 @@ export const SimulationView: React.FC<SimulationViewProps> = ({ result }) => {
           <p className="text-slate-400 text-sm mt-1">Contract Hash: <span className="font-mono text-slate-200">{result.contractId}</span></p>
         </div>
         <div className="mt-4 md:mt-0 flex gap-2">
+           {result.mode && (
+             <span
+               className={`px-3 py-1 border rounded-full text-xs font-bold uppercase tracking-wider ${
+                 result.mode === 'live'
+                   ? 'bg-cyan-500/10 text-cyan-300 border-cyan-500/20'
+                   : 'bg-amber-500/10 text-amber-300 border-amber-500/20'
+               }`}
+             >
+               {result.mode === 'live' ? 'Live AI' : 'Local Simulation'}
+             </span>
+           )}
            <span className="px-3 py-1 bg-green-500/10 text-green-400 border border-green-500/20 rounded-full text-xs font-bold uppercase tracking-wider">
              Optimized
            </span>
@@ -31,6 +42,17 @@ export const SimulationView: React.FC<SimulationViewProps> = ({ result }) => {
            </span>
         </div>
       </div>
+
+      {result.warnings && result.warnings.length > 0 && (
+        <div className="bg-amber-500/10 border border-amber-500/30 text-amber-200 text-xs md:text-sm rounded-lg p-3">
+          <p className="font-semibold uppercase tracking-wider mb-1">Engine Notice</p>
+          <ul className="list-disc list-inside space-y-1 text-amber-100/90">
+            {result.warnings.map((warning, idx) => (
+              <li key={idx}>{warning}</li>
+            ))}
+          </ul>
+        </div>
+      )}
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         

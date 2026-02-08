@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from 'react';
 import { 
   LayoutDashboard, 
@@ -28,6 +30,9 @@ function App() {
   const [dealDescription, setDealDescription] = useState('');
   const [isSimulating, setIsSimulating] = useState(false);
   const [simulationResult, setSimulationResult] = useState<SimulationResult | null>(null);
+  const [simulationError, setSimulationError] = useState<string | null>(null);
+
+  const hasApiKey = Boolean(process.env.NEXT_PUBLIC_OPENAI_API_KEY);
 
   const industries = [
     { id: Industry.ART, icon: <Diamond className="w-4 h-4" />, label: 'Art World' },
@@ -38,10 +43,32 @@ function App() {
     { id: Industry.AGRICULTURE, icon: <Wheat className="w-4 h-4" />, label: 'Agriculture' },
   ];
 
+  const quickPrompts = [
+    {
+      industry: Industry.MINING,
+      label: 'Lithium LBO',
+      prompt:
+        'Initiating an LBO for a mid-cap lithium mine in Western Australia. Need a $400M raise utilizing 30% DeFi bonds and 70% institutional equity. Ensure cross-border asset transfer compliance.'
+    },
+    {
+      industry: Industry.REAL_ESTATE,
+      label: 'Tokenized Tower',
+      prompt:
+        'Tokenize a $180M commercial tower in Dubai with REIT-backed debt, aiming for a 24-month stabilization and ESG reporting for global LPs.'
+    },
+    {
+      industry: Industry.ART,
+      label: 'Auction Escrow',
+      prompt:
+        'Structure a $60M escrow for a rotating collection of contemporary art with provenance verification, auction settlement, and AML safeguards.'
+    }
+  ];
+
   const handleSimulation = async () => {
     if (!dealDescription.trim()) return;
     setIsSimulating(true);
     setSimulationResult(null);
+    setSimulationError(null);
     
     // Simulate API delay for dramatic effect if response is too fast
     const start = Date.now();
@@ -57,6 +84,7 @@ function App() {
       setSimulationResult(result);
     } catch (e) {
       console.error(e);
+      setSimulationError('Simulation failed to run. Please retry or verify your API key.');
     } finally {
       setIsSimulating(false);
     }
@@ -249,6 +277,20 @@ function App() {
                     "This engine leverages my pattern recognition algorithms honed through years of PE and DeFi experience. It doesn't just process; it anticipates scarcity and regulatory bottlenecks before they occur."
                   </p>
                 </div>
+
+                <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl space-y-3">
+                  <div className="flex items-center justify-between">
+                    <h4 className="text-sm font-bold text-white">Engine Status</h4>
+                    <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${hasApiKey ? 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/30' : 'bg-amber-500/10 text-amber-300 border border-amber-500/30'}`}>
+                      {hasApiKey ? 'Live AI Enabled' : 'Local Mode'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-slate-400 leading-relaxed">
+                    {hasApiKey
+                      ? 'OpenAI is connected for live reasoning and structured outputs.'
+                      : 'Add NEXT_PUBLIC_OPENAI_API_KEY to .env.local to enable live AI generation.'}
+                  </p>
+                </div>
               </div>
 
               <div className="lg:col-span-2 flex flex-col gap-6">
@@ -266,7 +308,7 @@ function App() {
                     />
                     <div className="mt-4 flex justify-between items-center">
                       <span className="text-xs text-slate-500">
-                        *Engine runs on Gemini 2.5 Flash for high-speed reasoning.
+                        *Engine runs on OpenAI for high-speed reasoning.
                       </span>
                       <button
                         onClick={handleSimulation}
@@ -284,8 +326,32 @@ function App() {
                         )}
                       </button>
                     </div>
+
+                    <div className="mt-6 border-t border-slate-800 pt-4">
+                      <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Quick Launch Prompts</p>
+                      <div className="flex flex-wrap gap-2">
+                        {quickPrompts.map((item) => (
+                          <button
+                            key={item.label}
+                            onClick={() => {
+                              setSelectedIndustry(item.industry);
+                              setDealDescription(item.prompt);
+                            }}
+                            className="text-xs px-3 py-2 rounded-full border border-slate-800 bg-slate-900/60 text-slate-300 hover:border-indigo-500/50 hover:text-white transition"
+                          >
+                            {item.label}
+                          </button>
+                        ))}
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+                {simulationError && (
+                  <div className="bg-red-500/10 border border-red-500/30 text-red-200 text-sm rounded-lg p-4">
+                    {simulationError}
+                  </div>
+                )}
 
                 {simulationResult && <SimulationView result={simulationResult} />}
               </div>
