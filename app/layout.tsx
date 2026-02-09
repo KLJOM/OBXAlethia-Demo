@@ -11,6 +11,8 @@ export const metadata: Metadata = {
       { url: '/icons/icon-512.svg', type: 'image/svg+xml' }
     ]
   }
+  },
+  themeColor: '#020617'
 };
 
 export const viewport: Viewport = {
@@ -18,6 +20,7 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
   themeColor: '#020617'
+  viewportFit: 'cover'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

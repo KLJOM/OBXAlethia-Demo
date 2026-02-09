@@ -12,5 +12,7 @@ module.exports = {
     ],
     compilerPath: path.join(__dirname, "node_modules", "solc", "soljson.js")
   },
+module.exports = {
+  solidity: "0.8.24",
   defaultNetwork: "hardhat"
 };
