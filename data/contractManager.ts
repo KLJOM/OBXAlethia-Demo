@@ -59,7 +59,6 @@ export const activeContracts = [
     deployedAt: "2025-12-03",
     txHash: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb",
     blockchainUrl: "https://etherscan.io/tx/0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
-    txHash: "0x742d35Cc6634C0532925a3b844Bc9e7595f0bEb"
   },
   {
     name: "Manhattan Office Lease 2025",
@@ -70,7 +69,6 @@ export const activeContracts = [
     deployedAt: "2025-12-02",
     txHash: "0x8ba1f109551bD432803012645Ac136ddd64DBA72",
     blockchainUrl: "https://etherscan.io/tx/0x8ba1f109551bD432803012645Ac136ddd64DBA72"
-    txHash: "0x8ba1f109551bD432803012645Ac136ddd64DBA72"
   },
   {
     name: "Wheat Futures Q1 2026",
@@ -81,7 +79,6 @@ export const activeContracts = [
     deployedAt: "2025-11-28",
     txHash: "0x1c8aff950685c2ed4bc3174f3472287b56d9517b",
     blockchainUrl: "https://etherscan.io/tx/0x1c8aff950685c2ed4bc3174f3472287b56d9517b"
-    txHash: "0x1c8aff950685c2ed4bc3174f3472287b56d9517b"
   }
 ];
 

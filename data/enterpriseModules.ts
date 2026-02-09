@@ -96,11 +96,61 @@ export const enterpriseModules = [
       "Deployment cockpit for multi-sig parameters, gas priorities, and compliance gating.",
     category: "Contracts",
     primaryActions: ["Configure deploy", "Validate compliance", "Launch contract"]
+  },
+  {
+    title: "HR Command Center",
+    description:
+      "Hiring pipeline, compensation modeling, onboarding checklists, and workforce analytics.",
+    category: "HR",
+    primaryActions: ["Open requisition", "Review compensation", "Approve onboarding"]
+  },
+  {
+    title: "Insurance & Risk",
+    description:
+      "Policy inventory, claims workflows, and coverage gap monitoring with audit trails.",
+    category: "Risk",
+    primaryActions: ["Review policies", "Log claim", "Run coverage scan"]
+  },
+  {
+    title: "Marketing Intelligence",
+    description:
+      "Campaign orchestration, attribution dashboards, and budget governance with KPI triggers.",
+    category: "Marketing",
+    primaryActions: ["Launch campaign", "Track attribution", "Approve spend"]
+  },
+  {
+    title: "Accounting Hub",
+    description:
+      "Ledger reconciliation, tax readiness, and multi-entity reporting with compliance reviews.",
+    category: "Finance",
+    primaryActions: ["Reconcile ledgers", "Close period", "Export filings"]
+  },
+  {
+    title: "Financial Management",
+    description:
+      "Liquidity forecasting, treasury policy enforcement, and variance monitoring.",
+    category: "Finance",
+    primaryActions: ["Review forecast", "Approve transfer", "Set guardrails"]
+  },
+  {
+    title: "Legal & Arbitration",
+    description:
+      "Contract lifecycle tracking, arbitration playbooks, and regulatory evidence vaults.",
+    category: "Legal",
+    primaryActions: ["Review clauses", "Open dispute", "Upload evidence"]
+  },
+  {
+    title: "Investment Management",
+    description:
+      "Portfolio construction, risk limits, and on-chain execution controls for allocations.",
+    category: "Investments",
+    primaryActions: ["Set allocation", "Review risk", "Approve trade"]
   }
 ];
 
 export const enterpriseIntegrations = [
   "n8n Orchestration",
+  "Native LLM Core",
   "Boardroom Governance",
   "KYC/AML Automation",
   "Smart Contract Registry",

@@ -2,6 +2,8 @@ import { createServer } from "http";
 import { walletGateway } from "./walletGateway";
 import { handleContracts } from "./services/contracts";
 import { handleContainers } from "./services/containers";
+import { handleAgents } from "./services/agents";
+import { handleNativeLLM } from "./services/nativeLLM";
 
 const server = createServer(async (req, res) => {
   if (!req.url) {
@@ -22,6 +24,16 @@ const server = createServer(async (req, res) => {
 
   if (req.url.startsWith("/containers")) {
     await handleContainers(req, res);
+    return;
+  }
+
+  if (req.url.startsWith("/agents")) {
+    await handleAgents(req, res);
+    return;
+  }
+
+  if (req.url.startsWith("/llm")) {
+    await handleNativeLLM(req, res);
     return;
   }
 

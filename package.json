@@ -8,14 +8,19 @@
     "build": "next build",
     "start": "next start",
     "hardhat": "hardhat",
-    "test": "hardhat test"
+    "test": "node scripts/qa.js"
   },
   "dependencies": {
+    "@react-three/drei": "^9.122.0",
+    "@react-three/fiber": "^9.0.0",
+    "@studio-freight/lenis": "^1.0.42",
+    "gsap": "^3.12.5",
     "lucide-react": "^0.555.0",
     "next": "^15.2.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "recharts": "^3.5.1"
+    "recharts": "^3.5.1",
+    "three": "^0.165.0"
   },
   "devDependencies": {
     "@nomicfoundation/hardhat-toolbox": "^5.0.0",
@@ -23,6 +28,7 @@
     "@types/react": "^19.0.10",
     "@types/react-dom": "^19.0.4",
     "hardhat": "^2.22.0",
+    "solc": "^0.8.24",
     "typescript": "~5.8.2"
   }
 }
