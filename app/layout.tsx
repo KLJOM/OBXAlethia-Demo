@@ -1,8 +1,23 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 export const metadata: Metadata = {
   title: 'Aetherius Core | Anticipatory Contract Engine',
-  description: 'OBXAlethia executive dashboard and anticipatory contract engine.'
+  description: 'OBXAlethia executive dashboard and anticipatory contract engine.',
+  applicationName: 'OBXAlethia',
+  manifest: '/manifest.json',
+  icons: {
+    icon: [
+      { url: '/icons/icon-192.svg', type: 'image/svg+xml' },
+      { url: '/icons/icon-512.svg', type: 'image/svg+xml' }
+    ]
+  }
+};
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#020617'
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
