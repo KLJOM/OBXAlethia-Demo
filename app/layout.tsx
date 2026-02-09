@@ -10,6 +10,7 @@ export const metadata: Metadata = {
       { url: '/icons/icon-192.svg', type: 'image/svg+xml' },
       { url: '/icons/icon-512.svg', type: 'image/svg+xml' }
     ]
+  }
   },
   themeColor: '#020617'
 };
@@ -17,6 +18,8 @@ export const metadata: Metadata = {
 export const viewport: Viewport = {
   width: 'device-width',
   initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#020617'
   viewportFit: 'cover'
 };
 
