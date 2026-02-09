@@ -31,3 +31,6 @@ View your app in AI Studio: https://ai.studio/apps/drive/1JW4r5-9AWRnEr7PdWOcXRv
 ## Web Deployment & App Store Readiness
 - See [docs/deployment.md](docs/deployment.md) for Netlify/Render deployment and PWA readiness steps.
 - Architecture overview and repository structure are documented in [docs/architecture.md](docs/architecture.md).
+
+## Beginner Guide to Core Connections
+Start with [docs/deployment.md](docs/deployment.md) for simple explanations of how the blockchain, wallets, backend, database, AI, and automation layers connect.

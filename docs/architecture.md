@@ -3,6 +3,47 @@
 ## System Overview
 OBXAlethia is a Web3-native infrastructure gateway that combines a custom blockchain, modular smart contracts, and an AI-assisted ERP layer. The platform organizes work into transaction containers that isolate permissions, storage, and analytics while still emitting on-chain events for transparency.
 
+## Platform Scope & Core Modules
+
+### Tokenisation & Smart Contract Engine
+- ERC-20, ERC-721, and ERC-1155 token factories for fungible assets, NFTs, and fractionalized ownership.
+- Solidity for EVM deployment with upgrade-friendly proxy patterns and AccessControl.
+- Rust modules reserved for high-performance settlement or complex financial primitives.
+- Tokenized assets include NFTs, digital twins, loyalty points, brand identities, intangible rights, and fractional shares.
+
+### Custom Blockchain & Nodes
+- Golang node implementation with consensus, transaction validation, networking, and event emission.
+- EVM-compatibility target for contract execution and wallet tooling support.
+- Node APIs expose transaction submission, block/event subscriptions, and cross-chain routing hooks.
+
+### Deal & Contract Lifecycle Management
+- “Container” abstraction for each deal/project with isolated permissions, storage, and data scopes.
+- Modules for negotiation, templates, signatures, escrow, licensing, arbitration, and audit trails.
+- Dynamic pricing, royalty engines, subscriptions, and external trigger-based clauses.
+
+### Wallet & Identity Management
+- Wallet gateway for MetaMask, WalletConnect, and hardware wallets (ethers/web3/viem).
+- Identities based solely on public keys; off-chain identity linking only in trusted contexts.
+- Auth, session management, and delegation with key-based access control.
+
+### DeFi & CeFi Bridges & Yield Strategies
+- Bridge aggregation for Ethereum, BSC, Solana, and multi-chain liquidity routing.
+- Yield aggregation (staking, lending, liquidity pools) with stablecoin treasury controls.
+- CeFi integration for fiat on/off ramps, compliance modules, and AML/KYC workflows.
+
+### Data, Indexing & Analytics Layer
+- The Graph subgraphs for tokens, transactions, containers, and wallet interactions.
+- Python analytics services for on-chain/off-chain ingestion, bots, MEV research, and quant modeling.
+- PostgreSQL for relational state; IPFS/Arweave for decentralized document storage.
+
+### Compliance, Risk & Security
+- Encryption, selective disclosure, multisig escrow, key-based access control.
+- KYC/AML, taxation, audit trails, retention policies, and fraud/risk scoring.
+
+### AI & Automation
+- Python/Node services for predictive analytics, scoring models, and contract drafting.
+- Deterministic outputs with user override and explicit confirmation for critical actions.
+
 ## Layered Architecture
 
 ### 1) On-Chain Logic (Solidity + Rust)

@@ -22,6 +22,7 @@ import {
   Wallet,
   Wheat
 } from 'lucide-react';
+import Link from 'next/link';
 import gsap from 'gsap';
 import ScrollTrigger from 'gsap/ScrollTrigger';
 import { CapitalDeploymentChart, SectorAllocationChart } from './components/DashboardCharts';
@@ -31,6 +32,15 @@ import { contractTemplates, activeContracts, deploymentHighlights } from './data
 import { enterpriseIntegrations, enterpriseModules } from './data/enterpriseModules';
 import { infrastructureFeatures, industryCoverage } from './data/infrastructureFeatures';
 import { Industry, SimulationResult } from './types';
+import { activateAgentForIndustry, AgentProfile } from './services/agentRouter';
+
+function App() {
+  const [selectedIndustry, setSelectedIndustry] = useState<Industry>(Industry.FINANCE);
+  const [dealDescription, setDealDescription] = useState('');
+  const [isSimulating, setIsSimulating] = useState(false);
+  const [simulationResult, setSimulationResult] = useState<SimulationResult | null>(null);
+  const [simulationError, setSimulationError] = useState<string | null>(null);
+  const [activeAgent, setActiveAgent] = useState<AgentProfile | null>(null);
 import { InteractionProvider } from './components/interaction/InteractionProvider';
 import { LiquidScene } from './components/scene/LiquidScene';
 import { MagneticCard } from './components/ui/MagneticCard';
@@ -84,6 +94,7 @@ function App() {
     setIsSimulating(true);
     setSimulationResult(null);
     setSimulationError(null);
+    setActiveAgent(activateAgentForIndustry(selectedIndustry));
 
     const start = Date.now();
 
@@ -104,6 +115,69 @@ function App() {
     }
   };
 
+  return (
+    <div className="min-h-screen bg-[#05060b] text-slate-100 font-sans">
+      <div className="relative overflow-hidden">
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(87,96,255,0.25),_transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_rgba(34,211,238,0.15),_transparent_55%)]" />
+        <div className="absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-[#0b0f22] to-transparent" />
+        <div className="relative">
+          <header className="mx-auto flex max-w-6xl items-center justify-between px-6 py-6">
+            <div className="flex items-center gap-3">
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500 to-cyan-400 shadow-lg shadow-indigo-500/30">
+                <Globe className="h-6 w-6 text-white" />
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-white">OBXAlethia</p>
+                <p className="text-[10px] uppercase tracking-[0.4em] text-slate-400">Agentic ERP</p>
+              </div>
+            </div>
+            <nav className="hidden items-center gap-6 text-xs uppercase tracking-[0.2em] text-slate-400 md:flex">
+              <Link href="/solutions" className="hover:text-white transition">
+                Solutions
+              </Link>
+              <Link href="/web3" className="hover:text-white transition">
+                Web3
+              </Link>
+              <Link href="/agents" className="hover:text-white transition">
+                Agents
+              </Link>
+              <Link href="/erp" className="hover:text-white transition">
+                ERP
+              </Link>
+            </nav>
+            <button className="rounded-full border border-slate-700 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-slate-200">
+              Request Access
+            </button>
+          </header>
+
+          <section className="mx-auto grid max-w-6xl gap-12 px-6 pb-20 pt-6 md:grid-cols-[1.1fr_0.9fr]">
+            <div>
+              <p className="mb-4 inline-flex items-center gap-2 rounded-full border border-indigo-500/40 bg-indigo-500/10 px-4 py-2 text-xs uppercase tracking-[0.2em] text-indigo-200">
+                <Sparkles className="h-4 w-4" />
+                Secure AI + Web3 ERP
+              </p>
+              <h1 className="text-4xl font-semibold text-white md:text-5xl">
+                A digital contract chamber for institutional capital, agentic workflows, and decentralized borrowing.
+              </h1>
+              <p className="mt-6 text-base text-slate-300">
+                Orchestrate multi-institution programs with on-chain governance, AI decisioning, and automated
+                compliance. Align stakeholders, issue programmable contracts, and unlock capital across verticals.
+              </p>
+              <div className="mt-8 flex flex-wrap gap-4">
+                <button className="flex items-center gap-2 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500 px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30">
+                  Launch ERP <ArrowRight className="h-4 w-4" />
+                </button>
+                <button className="rounded-full border border-slate-700 px-6 py-3 text-sm font-semibold text-slate-200">
+                  View smart contracts
+                </button>
+              </div>
+              <div className="mt-10 flex flex-wrap gap-6 text-xs uppercase tracking-[0.2em] text-slate-500">
+                <div className="flex items-center gap-2">
+                  <ShieldCheck className="h-4 w-4 text-indigo-400" /> SOC2-ready controls
+                </div>
+                <div className="flex items-center gap-2">
+                  <Wallet className="h-4 w-4 text-cyan-400" /> Treasury-grade custody
   useLayoutEffect(() => {
     if (!heroRef.current) return;
     const ctx = gsap.context(() => {
@@ -192,6 +266,35 @@ function App() {
                 </div>
               </div>
 
+      <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-16 md:grid-cols-3">
+        {[
+          {
+            title: 'Digital Contract Chamber',
+            description: 'Register institutions, projects, and smart-contract governance on-chain.',
+            icon: <Layers3 className="h-5 w-5 text-indigo-300" />
+          },
+          {
+            title: 'Decentralized Settlement',
+            description: 'Programmable escrow, real-time distributions, and automated compliance.',
+            icon: <LineChart className="h-5 w-5 text-cyan-300" />
+          },
+          {
+            title: 'Agentic ERP Layer',
+            description: 'AI + workflow orchestration with secure data boundaries.',
+            icon: <Bot className="h-5 w-5 text-fuchsia-300" />
+          }
+        ].map((item) => (
+          <div
+            key={item.title}
+            className="group rounded-3xl border border-white/10 bg-white/5 p-6 backdrop-blur-xl transition-transform duration-300 hover:-translate-y-1"
+          >
+            <div className="flex items-center gap-3">
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-900">
+                {item.icon}
+              </span>
+              <p className="text-sm font-semibold text-white">{item.title}</p>
+            </div>
+            <p className="mt-4 text-sm text-slate-300">{item.description}</p>
               <ParallaxLayer depth={16} className="relative">
                 <div className="rounded-3xl border border-slate-800/70 bg-slate-900/50 p-6 backdrop-blur">
                   <div className="flex items-center justify-between">
@@ -230,6 +333,47 @@ function App() {
           </div>
         </div>
 
+      <section className="mx-auto max-w-6xl px-6 pb-20">
+        <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+          <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+            <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Capital intelligence</p>
+            <div className="mt-4 grid gap-4 md:grid-cols-2">
+              <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Capital utilization</p>
+                <div className="mt-3 h-36">
+                  <CapitalDeploymentChart />
+                </div>
+              </div>
+              <div className="rounded-2xl border border-slate-800 bg-slate-950/70 p-4">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Sector allocation</p>
+                <div className="mt-3 h-36">
+                  <SectorAllocationChart />
+                </div>
+              </div>
+            </div>
+            <div className="mt-6 rounded-2xl border border-slate-800 bg-gradient-to-r from-indigo-500/10 to-cyan-500/10 p-4">
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-400">Access</p>
+              <p className="mt-2 text-sm text-slate-200">
+                Launch private workspaces, invite institutions, and map permissions to on-chain roles.
+              </p>
+            </div>
+          </div>
+
+          <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+            <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Secure Infrastructure</p>
+            <div className="mt-4 grid gap-4">
+              {[
+                { label: 'Custody & Escrow', icon: <Lock className="h-4 w-4 text-indigo-300" /> },
+                { label: 'Tokenized Workflows', icon: <Boxes className="h-4 w-4 text-cyan-300" /> },
+                { label: 'Zero-Trust Routing', icon: <Cpu className="h-4 w-4 text-fuchsia-300" /> }
+              ].map((item) => (
+                <div key={item.label} className="flex items-center gap-3 rounded-2xl border border-slate-800 bg-slate-900/60 p-3 text-sm text-slate-200">
+                  <span className="flex h-8 w-8 items-center justify-center rounded-xl bg-slate-950">
+                    {item.icon}
+                  </span>
+                  {item.label}
+                </div>
+              ))}
         <section className="mx-auto grid max-w-6xl gap-6 px-6 pb-16 md:grid-cols-3" data-parallax="30">
           {[
             {
@@ -353,6 +497,108 @@ function App() {
                 {isSimulating ? 'Processing' : 'Run simulation'}
                 <ArrowRight className="h-4 w-4" />
               </button>
+            ))}
+          </div>
+          <textarea
+            value={dealDescription}
+            onChange={(e) => setDealDescription(e.target.value)}
+            placeholder="Describe the infrastructure deal, capital structure, and compliance requirements..."
+            className="mt-6 h-32 w-full rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-sm text-slate-100 placeholder:text-slate-600 focus:border-indigo-500 focus:outline-none"
+          />
+          <div className="mt-4 flex flex-wrap items-center justify-between gap-4">
+            <p className="text-xs text-slate-500">*OpenAI is used as the primary engine. Gemini can be added as fallback.</p>
+            <button
+              onClick={handleSimulation}
+              disabled={isSimulating || !dealDescription}
+              className={`flex items-center gap-2 rounded-full px-6 py-3 text-sm font-semibold transition ${
+                isSimulating || !dealDescription
+                  ? 'bg-slate-800 text-slate-500'
+                  : 'bg-gradient-to-r from-indigo-500 to-cyan-500 text-white shadow-lg shadow-indigo-500/30'
+              }`}
+            >
+              {isSimulating ? 'Processing' : 'Run simulation'}
+              <ArrowRight className="h-4 w-4" />
+            </button>
+          </div>
+          {simulationError && (
+            <div className="mt-4 rounded-2xl border border-red-500/40 bg-red-500/10 p-3 text-xs text-red-200">
+              {simulationError}
+            </div>
+          )}
+          {simulationResult && (
+            <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-950/70 p-4 text-sm text-slate-200">
+              <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Simulation Output</p>
+              <p className="mt-3 text-sm text-slate-200">{simulationResult.strategicInsight}</p>
+              <div className="mt-4 space-y-2 text-xs text-slate-400">
+                {simulationResult.complianceChecklist.map((step, index) => (
+                  <div key={`${step}-${index}`} className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-3 w-3 text-cyan-400" />
+                    <span>
+                      {index + 1}. {step}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          {activeAgent && (
+            <div className="mt-6 rounded-2xl border border-slate-800 bg-slate-900/60 p-4 text-sm text-slate-200">
+              <div className="flex items-center justify-between">
+                <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Agent Online</p>
+                <span className="rounded-full border border-emerald-500/40 bg-emerald-500/10 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-emerald-200">
+                  {activeAgent.backgroundStatus}
+                </span>
+              </div>
+              <p className="mt-2 text-sm font-semibold text-white">{activeAgent.name}</p>
+              <p className="mt-1 text-xs text-slate-400">{activeAgent.role}</p>
+              <p className="mt-3 text-xs text-slate-300">{activeAgent.focus}</p>
+              <div className="mt-3 grid gap-2 text-[11px] text-slate-400">
+                {activeAgent.runbook.map((step) => (
+                  <div key={step} className="flex items-center gap-2">
+                    <span className="h-1.5 w-1.5 rounded-full bg-cyan-400" />
+                    {step}
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+          <div className="mt-6 border-t border-slate-800 pt-4">
+            <p className="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-3">Quick Launch Prompts</p>
+            <div className="flex flex-wrap gap-2">
+              {quickPrompts.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => {
+                    setSelectedIndustry(item.industry);
+                    setDealDescription(item.prompt);
+                  }}
+                  className="text-xs px-3 py-2 rounded-full border border-slate-800 bg-slate-900/60 text-slate-300 hover:border-indigo-500/50 hover:text-white transition"
+                >
+                  {item.label}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div className="space-y-6">
+          <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+            <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Deployment telemetry</p>
+            <h3 className="mt-2 text-2xl font-semibold text-white">Execution workspace</h3>
+            <div className="mt-6 space-y-4">
+              {deploymentHighlights.map((item) => (
+                <div key={item.label} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                  <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">{item.label}</p>
+                  <p className="mt-2 text-sm font-semibold text-white">{item.value}</p>
+                  <p className="mt-2 text-xs text-slate-400">{item.description}</p>
+                </div>
+              ))}
+              <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl">
+                <h4 className="text-sm font-bold text-white mb-2">Founder's Note</h4>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  "This engine leverages my pattern recognition algorithms honed through years of PE and DeFi experience. It doesn't just process; it anticipates scarcity and regulatory bottlenecks before they occur."
+                </p>
+              </div>
             </div>
             {simulationError && (
               <div className="mt-4 rounded-2xl border border-red-500/40 bg-red-500/10 p-3 text-xs text-red-200">
@@ -394,27 +640,64 @@ function App() {
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
-              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Deployment telemetry</p>
-              <h3 className="mt-2 text-2xl font-semibold text-white">Execution workspace</h3>
-              <div className="mt-6 space-y-4">
-                {deploymentHighlights.map((item) => (
-                  <div key={item.label} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
-                    <p className="text-[11px] uppercase tracking-[0.2em] text-slate-500">{item.label}</p>
-                    <p className="mt-2 text-sm font-semibold text-white">{item.value}</p>
-                    <p className="mt-2 text-xs text-slate-400">{item.description}</p>
-                  </div>
-                ))}
-                <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl">
-                  <h4 className="text-sm font-bold text-white mb-2">Founder's Note</h4>
-                  <p className="text-xs text-slate-400 leading-relaxed">
-                    "This engine leverages my pattern recognition algorithms honed through years of PE and DeFi experience. It doesn't just process; it anticipates scarcity and regulatory bottlenecks before they occur."
-                  </p>
+              <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl space-y-3">
+                <div className="flex items-center justify-between">
+                  <h4 className="text-sm font-bold text-white">Engine Status</h4>
+                  <span
+                    className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${
+                      hasApiKey
+                        ? 'bg-cyan-500/10 text-cyan-300 border border-cyan-500/30'
+                        : 'bg-amber-500/10 text-amber-300 border border-amber-500/30'
+                    }`}
+                  >
+                    {hasApiKey ? 'Live AI Enabled' : 'Local Mode'}
+                  </span>
                 </div>
+                <p className="text-xs text-slate-400 leading-relaxed">
+                  {hasApiKey
+                    ? 'OpenAI is connected for live reasoning and structured outputs.'
+                    : 'Add NEXT_PUBLIC_OPENAI_API_KEY to .env.local to enable live AI generation.'}
+                </p>
+              </div>
+            </div>
+          </div>
 
-                <div className="bg-slate-900 border border-slate-800 p-5 rounded-xl space-y-3">
+          <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+            <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Active contracts</p>
+            <div className="mt-4 space-y-4">
+              {activeContracts.map((contract) => (
+                <div key={contract.name} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
                   <div className="flex items-center justify-between">
+                    <p className="text-sm font-semibold text-white">{contract.name}</p>
+                    <span className="rounded-full border border-slate-700 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-400">
+                      {contract.status}
+                    </span>
+                  </div>
+                  <p className="mt-2 text-xs uppercase tracking-[0.2em] text-slate-500">{contract.type}</p>
+                  <p className="mt-2 text-xs text-slate-400">Parties: {contract.parties.join(', ')}</p>
+                  <div className="mt-3 h-2 w-full overflow-hidden rounded-full bg-slate-800">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500"
+                      style={{ width: `${contract.progress}%` }}
+                    />
+                  </div>
+                  <div className="mt-3 flex items-center justify-between text-xs text-slate-500">
+                    <span>Deployed {contract.deployedAt}</span>
+                    {contract.blockchainUrl ? (
+                      <a
+                        href={contract.blockchainUrl}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="text-cyan-300 hover:text-cyan-200"
+                      >
+                        {contract.txHash.slice(0, 10)}…
+                      </a>
+                    ) : (
+                      <span>{contract.txHash.slice(0, 10)}…</span>
+                    )}
+                  </div>
+                </div>
+              ))}
                     <h4 className="text-sm font-bold text-white">Engine Status</h4>
                     <span
                       className={`text-[10px] font-bold uppercase tracking-wider px-2 py-1 rounded-full ${
@@ -665,6 +948,125 @@ function App() {
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-8">
+          <div className="flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Institutional infrastructure</p>
+              <h3 className="mt-2 text-2xl font-semibold text-white">Institutional-grade capabilities</h3>
+            </div>
+            <span className="rounded-full border border-slate-700 px-3 py-1 text-[10px] uppercase tracking-[0.3em] text-slate-400">
+              Next.js core
+            </span>
+          </div>
+          <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+            {infrastructureFeatures.map((feature) => (
+              <div key={feature.title} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-5">
+                <p className="text-sm font-semibold text-white">{feature.title}</p>
+                <p className="mt-3 text-sm text-slate-400">{feature.description}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-8 flex flex-wrap items-center gap-3 text-xs text-slate-300">
+            {industryCoverage.map((industry) => (
+              <span
+                key={industry}
+                className="rounded-full border border-slate-800 bg-slate-900/60 px-4 py-2 text-[11px] uppercase tracking-[0.25em] text-slate-400"
+              >
+                {industry}
+              </span>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className="mx-auto max-w-6xl px-6 pb-24">
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
+          <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+            <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Smart contract manager</p>
+            <h3 className="mt-2 text-2xl font-semibold text-white">Deployment-ready templates</h3>
+            <div className="mt-6 grid gap-4 md:grid-cols-2">
+              {contractTemplates.map((template) => (
+                <div key={template.name} className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <p className="text-sm font-semibold text-white">{template.name}</p>
+                      <p className="mt-1 text-xs uppercase tracking-[0.2em] text-slate-500">{template.category}</p>
+                    </div>
+                    <span className="rounded-full border border-slate-700 px-2 py-1 text-[10px] uppercase tracking-[0.2em] text-slate-400">
+                      {template.complexity}
+                    </span>
+                  </div>
+                  <div className="mt-4 flex flex-wrap gap-2 text-xs text-slate-300">
+                    <span className="rounded-full border border-slate-800 px-2 py-1">Cost: {template.deployCost}</span>
+                    <span className="rounded-full border border-slate-800 px-2 py-1">Avg: {template.avgTime}</span>
+                  </div>
+                  <div className="mt-3 flex flex-wrap gap-2 text-[11px] text-slate-400">
+                    {template.compliance.map((req) => (
+                      <span key={req} className="rounded-full border border-slate-800 px-2 py-1">
+                        {req}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="space-y-6">
+            <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Custody + governance</p>
+              <h3 className="mt-2 text-2xl font-semibold text-white">Unified operational cockpit</h3>
+              <div className="mt-6 space-y-4 text-sm text-slate-300">
+                <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Treasury & Transparency</p>
+                  <p className="mt-2 text-sm text-slate-300">
+                    Establish always-on reporting with chain-aware telemetry, analytics, and audit readiness.
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Agents + Workflows</p>
+                  <p className="mt-2 text-sm text-slate-300">
+                    Coordinate agents, permissions, and data rooms for complex, multi-party engagement.
+                  </p>
+                </div>
+                <div className="rounded-2xl border border-slate-800 bg-slate-900/60 p-4">
+                  <p className="text-xs uppercase tracking-[0.2em] text-slate-500">Compliant Settlement</p>
+                  <p className="mt-2 text-sm text-slate-300">
+                    Enforce on-chain approvals, escrow-based settlement, and institutional controls.
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div className="rounded-3xl border border-slate-800 bg-slate-950/70 p-6">
+              <p className="text-xs uppercase tracking-[0.3em] text-slate-500">Integrated across verticals</p>
+              <div className="mt-6 grid gap-3 text-xs text-slate-300">
+                {[
+                  'Tokenized debt',
+                  'Cross-border equity',
+                  'Compliant collateralization',
+                  'Programmable escrow',
+                  'Agentic diligence',
+                  'Institutional KYC/AML'
+                ].map((item) => (
+                  <div key={item} className="flex items-center gap-2 rounded-xl border border-slate-800 bg-slate-900/60 p-3">
+                    <span className="h-2 w-2 rounded-full bg-cyan-400" />
+                    {item}
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer className="border-t border-slate-900/60 py-12 text-center text-xs text-slate-500">
+        OBXAlethia · Secure, adaptive infrastructure for institutional on-chain capital.
+      </footer>
+    </div>
         </section>
 
         <footer className="border-t border-slate-900/60 py-12 text-center text-xs text-slate-500">
