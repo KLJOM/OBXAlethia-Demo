@@ -54,3 +54,37 @@ OBXAlethia is a Web3-native infrastructure gateway that combines a custom blockc
 3. On-chain events emitted and indexed by The Graph.
 4. Analytics services ingest on-chain data and publish insights.
 5. UI surfaces modules in the ERP workspace with role-based access.
+
+## Repository Folder Structure
+```
+app/                  # Next.js app router entrypoints
+components/           # UI primitives and feature modules
+backend/              # Node.js/TypeScript API, wallet gateway, event listeners
+chain/                # Go-based custom blockchain node implementation
+contracts/            # Solidity + Rust smart contracts and interfaces
+containers/           # Transaction container abstractions and policies
+data/                 # Seed data and mock datasets for the UI
+db/                   # PostgreSQL schema, migrations, and access helpers
+docs/                 # Architecture and deployment documentation
+infra/                # Docker and local orchestration assets
+python/               # Quant, bot, and analytics services
+security/             # Confidentiality, encryption, and access patterns
+services/             # Shared service layer utilities
+storage/              # IPFS/Arweave integration helpers
+subgraph/             # The Graph mappings and manifest
+```
+
+## Layer Interactions
+- **Frontend ↔ Backend**: The Next.js web app calls the Node.js API for container creation, data access, and wallet session metadata.
+- **Backend ↔ Blockchain**: The API uses ethers/web3/viem to sign, submit, and monitor transactions, writing off-chain metadata to Postgres.
+- **Blockchain ↔ Indexing**: Smart contracts emit events that The Graph indexes for low-latency UI queries.
+- **Backend ↔ Storage**: Off-chain artifacts are encrypted, uploaded to IPFS/Arweave, and referenced via CIDs on-chain and in Postgres.
+- **Analytics ↔ Data**: Python services ingest on-chain events, run simulations, and expose insights through APIs to the UI or automation flows.
+
+## Security Considerations by Layer
+- **Smart Contracts**: AccessControl for permissions, reentrancy guards, and proxy-safe upgrade patterns.
+- **Custom Blockchain**: Deterministic transaction validation, consensus signature checks, and network peer allowlists.
+- **Backend Services**: JWT-free, key-based auth; request signing; rate limiting; contract allowlists.
+- **Database**: Encrypted sensitive fields, least-privilege roles, audited migrations.
+- **Indexing**: Read-only GraphQL endpoints with allowlisted queries for sensitive container data.
+- **Storage**: Client-side encryption with per-container keys; CIDs stored without plaintext metadata.
